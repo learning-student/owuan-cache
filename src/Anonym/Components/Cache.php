@@ -24,10 +24,21 @@ class Cache
      */
     public function __construct(DriverInterface $driver = null, array $config = [])
     {
+        $this->useDefaultVars();
         $this->driver($driver ,$config);
     }
 
 
+    /**
+     * Ön tanımlı değerleri kullanır.
+     *
+     */
+    private function useDefaultVars()
+    {
+        $this->setDriverList([
+            'local' => LocalDriver::class,
+        ]);
+    }
     /**
      * @return DriverInterface
      */
@@ -46,7 +57,15 @@ class Cache
      */
     public function driver($driver = '', array $configs = [])
     {
+        $driverList = $this->getDriverList();
 
+        if (isset($driverList[$driver])) {
+            $driver = $driverList[$driver];
+        }
+
+        if (is_string($driver)) {
+            $driver = new $driver;
+        }
 
         return $this->setDriver($driver, $configs);
     }
@@ -112,7 +131,5 @@ class Cache
         $this->driverList = $driverList;
         return $this;
     }
-
-
 
 }
