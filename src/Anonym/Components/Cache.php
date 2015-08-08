@@ -39,7 +39,7 @@ class Cache
     private function useDefaultVars()
     {
         $this->setDriverList([
-            'local' => LocalDriver::class,
+            'local' => FileCache::class,
         ]);
     }
     /**
