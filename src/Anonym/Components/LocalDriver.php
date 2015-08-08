@@ -28,16 +28,6 @@ class LocalDriver extends AbstractDriver implements DriverInterface, DriverAdapt
      */
     private $folder;
 
-
-    /**
-     *Ayarların ne kadar süre tutulacağını tutar
-     *
-     *
-     * @var int -> time
-     */
-    private $time = 3600;
-
-
     /**
      *Dosyanın uzantısını tutar
      *
@@ -85,8 +75,11 @@ class LocalDriver extends AbstractDriver implements DriverInterface, DriverAdapt
             return false;
         }
 
-        // we dont need do something else
-        return true;
+        // we have do something else
+
+        if (function_exists('gzcompress') && function_exists('gzuncompress')) {
+            return true;
+        }
     }
 
     /**
@@ -138,24 +131,6 @@ class LocalDriver extends AbstractDriver implements DriverInterface, DriverAdapt
     }
 
     /**
-     * @return int
-     */
-    public function getTime()
-    {
-        return $this->time;
-    }
-
-    /**
-     * @param int $time
-     * @return LocalDriver
-     */
-    public function setTime($time)
-    {
-        $this->time = $time;
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getExt()
@@ -188,7 +163,61 @@ class LocalDriver extends AbstractDriver implements DriverInterface, DriverAdapt
         return $path;
     }
 
+    /**
+     * Dosyanın kullanım zamanının geçip geçmediğini kontrol eder
+     *
+     * @param int $time
+     * @return bool
+     */
+    private function checkTime($time = 0)
+    {
+        $now = time();
 
+        if ($now > $time) {
+            return false;
+        }else{
+            return true;
+        }
+
+    }
+    /**
+     * Girilen parametreye göre dosyanın yolunu hazırlar
+     *
+     * @param string $file
+     * @return string
+     */
+
+    private function cacheFileNameGenaretor($file)
+    {
+        return $file . $this->getExt();
+    }
+
+    /**
+     * Dosyaya yazdırılacak içeriği oluşturur
+     *
+     * @param string $value
+     * @param int $time
+     * @return string
+     */
+    private function contentGenerator($value, $time = 0)
+    {
+        return $time. "#". gzcompress($value);
+    }
+    /**
+     * İçeriği parçalar
+     *
+     * @param string $content
+     * @return array
+     */
+    private function parseContent($content = '')
+    {
+
+        list($time, $content) = explode("#", $content);
+        return [
+            $time, gzuncompress($content)
+        ];
+
+    }
     /**
      * Verinin değerini döndürür
      *
@@ -197,7 +226,23 @@ class LocalDriver extends AbstractDriver implements DriverInterface, DriverAdapt
      */
     public function get($name)
     {
+        $file = $this->cacheFileNameGenaretor($name);
+        $file = $this->inPath($file);
 
+        $content = $this->getFileSystem()->read($file);
+        $parsed = $this->parseContent($content);
+
+        if (count($parsed) === 2) {
+            list($time, $content) = $parsed;
+
+            if ($this->checkTime($time)) {
+                return $content;
+            }else{
+                $this->delete($file);
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -210,7 +255,18 @@ class LocalDriver extends AbstractDriver implements DriverInterface, DriverAdapt
      */
     public function set($name, $value, $time = 3600)
     {
+        $file = $this->cacheFileNameGenaretor($name);
+        $file = $this->inPath($file);
 
+        $time = time() + $time;
+        $content = $this->contentGenerator($value, $time);
+        $write = $this->getFileSystem()->write($file, $content);
+
+        if ($write) {
+
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -219,6 +275,16 @@ class LocalDriver extends AbstractDriver implements DriverInterface, DriverAdapt
      */
     public function delete($name)
     {
+        $file = $this->cacheFileNameGenaretor($name);
+        $file = $this->inPath($file);
+
+        $filesys = $this->getFileSystem();
+
+        if ($filesys->exists($file)) {
+            return $filesys->delete($file);
+        }else{
+            return false;
+        }
 
     }
 
@@ -229,7 +295,14 @@ class LocalDriver extends AbstractDriver implements DriverInterface, DriverAdapt
      */
     public function flush()
     {
+        $files = glob($this->getFolder(), GLOB_NOSORT);
 
+        foreach($files as $file)
+        {
+            $this->delete($file);
+        }
+
+        return true;
     }
 
     /**
@@ -240,6 +313,13 @@ class LocalDriver extends AbstractDriver implements DriverInterface, DriverAdapt
      */
     public function exists($name)
     {
+        $file = $this->cacheFileNameGenaretor($name);
+        $file = $this->inPath($file);
 
+        if($this->exists($file)){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
