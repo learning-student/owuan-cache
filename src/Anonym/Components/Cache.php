@@ -54,13 +54,15 @@ class Cache
     public function setDriver(DriverInterface $driver, array $configs = [])
     {
 
+
+        $this->driver = $driver;
+        $this->driver->boot($configs);
+
         if(true !== $driver->check())
         {
             throw new DriverNotInstalledException(sprintf('%s sürücünüz kullanýma hazýr deðil.', get_class($driver)));
         }
 
-        $this->driver = $driver;
-        $this->driver->boot($configs);
 
         return $this;
     }

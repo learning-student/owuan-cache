@@ -17,4 +17,31 @@ namespace Anonym\Components\Cache;
 abstract class AbstractDriver
 {
 
+    /**
+     *ayarlarý tutar
+     *
+     *
+     * @var  -> config
+     */
+    private $config;
+
+    /**
+     * @return mixed
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+    /**
+     * @param mixed $config
+     * @return AbstractDriver
+     */
+    public function setConfig($config)
+    {
+        $this->config = $config;
+        return $this;
+    }
+
+
 }
