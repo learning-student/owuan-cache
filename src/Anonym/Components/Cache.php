@@ -95,4 +95,24 @@ class Cache
         return call_user_func_array([$this->getDriver(), $name], $args);
     }
 
+    /**
+     * @return array
+     */
+    public function getDriverList()
+    {
+        return $this->driverList;
+    }
+
+    /**
+     * @param array $driverList
+     * @return Cache
+     */
+    public function setDriverList($driverList)
+    {
+        $this->driverList = $driverList;
+        return $this;
+    }
+
+
+
 }
