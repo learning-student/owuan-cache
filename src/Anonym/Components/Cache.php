@@ -33,7 +33,7 @@ class Cache
      * @param DriverInterface $driver
      * @param array $configs
      * @throws DriverNotInstalledException
-     * @return Cache
+     * @return DriverAdapter
      */
     public function setDriver(DriverInterface $driver, array $configs = [])
     {
