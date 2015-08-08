@@ -10,28 +10,12 @@ class Cache
 {
 
     /**
-     * Sürücü objesini tutar
-     *
-     * @var DriverInterface
-     */
-    private $driver;
-
-
-    /**
-     * Sürücü listesini tutar
-     *
-     * @var array
-     */
-    private $driverList;
-
-
-    /**
      * Ayarları kullanır
      *
      * @param DriverInterface $driver
      * @param array $config
      */
-    public function __construct(DriverInterface $driver, array $config = [])
+    public function __construct(DriverInterface $driver = null, array $config = [])
     {
         $this->setDriver($driver ,$config);
     }
@@ -55,8 +39,7 @@ class Cache
     {
 
 
-        $this->driver = $driver;
-        $this->driver->boot($configs);
+       $driver->boot($configs);
 
         if(true !== $driver->check())
         {
@@ -64,7 +47,19 @@ class Cache
         }
 
 
-        return $this;
+        return $this->adapter($driver);
+    }
+
+    /**
+     * Driver olarak kullanıma hazırla
+     *
+     * @param DriverInterface $driver
+     * @return DriverAdapter
+     */
+    private function adapter(DriverInterface $driver)
+    {
+
+        return new DriverAdapter($driver);
     }
     /**
      * Dinamik olarak sürücüden method çağrılır
