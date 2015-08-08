@@ -10,6 +10,7 @@
 
 namespace Anonym\Components\Cache;
 
+use Memcache;
 /**
  * Class MemcacheDriver
  * @package Anonym\Components\Cache
@@ -18,6 +19,13 @@ class MemcacheDriver extends AbstractDriver implements DriverInterface, DriverAd
 {
 
     /**
+     * Memcache objesini tutar
+     *
+     *
+     * @var  \Memcache-> driver
+     */
+    private $driver;
+    /**
      * Verinin değerini döndürür
      *
      * @param string $name
@@ -25,7 +33,7 @@ class MemcacheDriver extends AbstractDriver implements DriverInterface, DriverAd
      */
     public function get($name)
     {
-
+        return $this->getDriver()->get($name);
     }
 
     /**
@@ -38,7 +46,7 @@ class MemcacheDriver extends AbstractDriver implements DriverInterface, DriverAd
      */
     public function set($name, $value, $time = 3600)
     {
-
+        return $this->getDriver()->set($name, $value, $time);
     }
 
     /**
@@ -47,7 +55,7 @@ class MemcacheDriver extends AbstractDriver implements DriverInterface, DriverAd
      */
     public function delete($name)
     {
-
+        return $this->getDriver()->delete($name);
     }
 
     /**
@@ -57,7 +65,7 @@ class MemcacheDriver extends AbstractDriver implements DriverInterface, DriverAd
      */
     public function flush()
     {
-
+        return $this->getDriver()->flush();
     }
 
     /**
@@ -72,12 +80,17 @@ class MemcacheDriver extends AbstractDriver implements DriverInterface, DriverAd
     }
 
     /**
-     *
+     *Memcache sürücüsünün yüklü olup olmadığını kontrol eder
      *
      * @return bool
      */
     public function check()
     {
+
+        if(extension_loaded('memcache'))
+        {
+            return true;
+        }
 
     }
 
@@ -89,6 +102,29 @@ class MemcacheDriver extends AbstractDriver implements DriverInterface, DriverAd
      */
     public function boot(array $configs = [])
     {
+        $host = $configs['host'];
+        $port = $configs['port'];
 
+        $this->setDriver( new Memcache($host, $port));
     }
+
+    /**
+     * @return \Memcache
+     */
+    public function getDriver()
+    {
+        return $this->driver;
+    }
+
+    /**
+     * @param \Memcache $driver
+     * @return MemcacheDriver
+     */
+    public function setDriver($driver)
+    {
+        $this->driver = $driver;
+        return $this;
+    }
+
+
 }
