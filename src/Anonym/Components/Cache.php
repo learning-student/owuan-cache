@@ -26,15 +26,6 @@ class Cache
 
 
     /**
-     * ayarlarý tutar
-     *
-     *
-     * @var array -> config
-     */
-    private $config;
-
-
-    /**
      * Ayarlarý kullanýr
      *
      * @param DriverInterface $driver
@@ -42,22 +33,11 @@ class Cache
      */
     public function __construct(DriverInterface $driver, array $config = [])
     {
-        $this->setDriver($driver);
-        $this->setConfig($config);
+        $this->setDriver($driver ,$config);
 
         $this->useDefaults();
     }
 
-    /**
-     *
-     * Ön tanýmlý ayarlarý ayarlar
-     */
-    private function useDefaults()
-    {
-        $this->setDriverList([
-            'local' => LocalDriver::class,
-        ]);
-    }
 
     /**
      * @return DriverInterface
@@ -69,53 +49,32 @@ class Cache
 
     /**
      * @param DriverInterface $driver
+     * @param array $configs
+     * @throws DriverNotInstalledException
      * @return Cache
      */
-    public function setDriver(DriverInterface $driver)
+    public function setDriver(DriverInterface $driver, array $configs = [])
     {
+
+        if(true !== $driver->check())
+        {
+            throw new DriverNotInstalledException(sprintf('%s sürücünüz kullanýma hazýr deðil.', get_class($driver)));
+        }
         $this->driver = $driver;
+        $this->driver->boot($configs);
+
         return $this;
     }
-
     /**
-     * @return array
-     */
-    public function getDriverList()
-    {
-        return $this->driverList;
-    }
-
-    /**
-     * @param array $driverList
-     * @return Cache
-     */
-    public function setDriverList($driverList)
-    {
-        $this->driverList = $driverList;
-        return $this;
-    }
-
-    /**
-     * Ayarlarý döndürür
+     * Dinamik olarak sürücüden method çaðrýlýr
      *
-     * @return array
+     * @param string $name
+     * @param array $args
+     * @return mixed
      */
-    public function getConfig()
+    public function __call($name, $args)
     {
-        return $this->config;
+        return call_user_func_array([$this->getDriver(), $name], $args);
     }
-
-    /**
-     * Ayarlarý ayarlar
-     *
-     * @param array $config
-     * @return Cache
-     */
-    public function setConfig($config)
-    {
-        $this->config = $config;
-        return $this;
-    }
-
 
 }

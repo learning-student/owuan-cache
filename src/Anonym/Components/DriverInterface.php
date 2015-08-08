@@ -9,4 +9,10 @@ namespace Anonym\Components\Cache;
 interface DriverInterface
 {
 
+    /**
+     *
+     *
+     * @return bool
+     */
+    public function check();
 }
