@@ -295,8 +295,8 @@ class LocalDriver extends AbstractDriver implements DriverInterface, DriverAdapt
      */
     public function flush()
     {
-        $files = glob($this->getFolder(), GLOB_NOSORT);
 
+        $files = $this->getFileSystem()->files($this->getFolder());
         foreach($files as $file)
         {
             $this->delete($file);
