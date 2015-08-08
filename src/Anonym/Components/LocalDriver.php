@@ -1,6 +1,6 @@
 <?php
 /**
- * Bu Dosya AnonymFramework'e ait bir dosyadır.
+ * Bu Dosya AnonymFramework'e ait bir dosyadÄ±r.
  *
  * @author vahitserifsaglam <vahit.serif119@gmail.com>
  * @see http://gemframework.com
@@ -46,7 +46,7 @@ class LocalDriver extends AbstractDriver implements DriverInterface
     }
 
     /**
-     * Ayarları kullanır ve bazı başlangıç işlemlerini gerçekleştirir
+     * AyarlarÄ± kullanÄ±r ve bazÄ± baÅŸlangÄ±Ã§ iÅŸlemlerini gerÃ§ekleÅŸtirir
      *
      * @param array $configs
      * @return mixed

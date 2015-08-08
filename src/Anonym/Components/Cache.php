@@ -10,7 +10,7 @@ class Cache
 {
 
     /**
-     * Sürücü objesini tutar
+     * SÃ¼rÃ¼cÃ¼ objesini tutar
      *
      * @var DriverInterface
      */
@@ -18,7 +18,7 @@ class Cache
 
 
     /**
-     * Sürücü listesini tutar
+     * SÃ¼rÃ¼cÃ¼ listesini tutar
      *
      * @var array
      */
@@ -26,7 +26,7 @@ class Cache
 
 
     /**
-     * Ayarları kullanır
+     * AyarlarÄ± kullanÄ±r
      *
      * @param DriverInterface $driver
      * @param array $config
@@ -60,14 +60,14 @@ class Cache
 
         if(true !== $driver->check())
         {
-            throw new DriverNotInstalledException(sprintf('%s sürücünüz kullanıma hazır değil.', get_class($driver)));
+            throw new DriverNotInstalledException(sprintf('%s sÃ¼rÃ¼cÃ¼nÃ¼z kullanÄ±ma hazÄ±r deÄŸil.', get_class($driver)));
         }
 
 
         return $this;
     }
     /**
-     * Dinamik olarak sürücüden method çağrılır
+     * Dinamik olarak sÃ¼rÃ¼cÃ¼den method Ã§aÄŸrÄ±lÄ±r
      *
      * @param string $name
      * @param array $args

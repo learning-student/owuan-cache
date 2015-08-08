@@ -17,7 +17,7 @@ interface DriverInterface
     public function check();
 
     /**
-     * Ayarları kullanır ve bazı başlangıç işlemlerini gerçekleştirir
+     * AyarlarÄ± kullanÄ±r ve bazÄ± baÅŸlangÄ±Ã§ iÅŸlemlerini gerÃ§ekleÅŸtirir
      *
      * @param array $configs
      * @return mixed
