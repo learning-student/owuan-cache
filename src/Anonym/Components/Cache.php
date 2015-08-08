@@ -60,6 +60,7 @@ class Cache
         {
             throw new DriverNotInstalledException(sprintf('%s sürücünüz kullanýma hazýr deðil.', get_class($driver)));
         }
+
         $this->driver = $driver;
         $this->driver->boot($configs);
 
