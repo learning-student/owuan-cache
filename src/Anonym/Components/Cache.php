@@ -34,8 +34,6 @@ class Cache
     public function __construct(DriverInterface $driver, array $config = [])
     {
         $this->setDriver($driver ,$config);
-
-        $this->useDefaults();
     }
 
 
