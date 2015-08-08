@@ -10,6 +10,13 @@ class Cache
 {
 
     /**
+     * Sürüclerin listesini tutar
+     *
+     *
+     * @var  array-> driverList
+     */
+    private $driverList;
+    /**
      * Ayarları kullanır
      *
      * @param DriverInterface $driver
@@ -17,7 +24,7 @@ class Cache
      */
     public function __construct(DriverInterface $driver = null, array $config = [])
     {
-        $this->setDriver($driver ,$config);
+        $this->driver($driver ,$config);
     }
 
 
@@ -30,10 +37,25 @@ class Cache
     }
 
     /**
+     * Sürücü seçimi yapar
+     *
+     * @param string $driver
+     * @param array $configs
+     * @throws DriverNotInstalledException
+     * @return DriverAdapterInterface
+     */
+    public function driver($driver = '', array $configs = [])
+    {
+
+
+        return $this->setDriver($driver, $configs);
+    }
+
+    /**
      * @param DriverInterface $driver
      * @param array $configs
      * @throws DriverNotInstalledException
-     * @return DriverAdapter
+     * @return DriverAdapterInterface
      */
     public function setDriver(DriverInterface $driver, array $configs = [])
     {
@@ -54,7 +76,7 @@ class Cache
      * Driver olarak kullanıma hazırla
      *
      * @param DriverInterface $driver
-     * @return DriverAdapter
+     * @return DriverAdapterInterface
      */
     private function adapter(DriverInterface $driver)
     {
