@@ -17,7 +17,7 @@ use Anonym\Components\Filesystem\FilesystemAdapter;
  * Class LocalDriver
  * @package Anonym\Components\Caches
  */
-class LocalDriver extends AbstractDriver implements DriverInterface
+class LocalDriver extends AbstractDriver implements DriverInterface, DriverAdapterInterface
 {
 
     /**
@@ -189,4 +189,57 @@ class LocalDriver extends AbstractDriver implements DriverInterface
     }
 
 
+    /**
+     * Verinin değerini döndürür
+     *
+     * @param string $name
+     * @return mixed
+     */
+    public function get($name)
+    {
+
+    }
+
+    /**
+     * Veri ataması yapar
+     *
+     * @param string $name
+     * @param mixed $value
+     * @param int $time
+     * @return mixed
+     */
+    public function set($name, $value, $time = 3600)
+    {
+
+    }
+
+    /**
+     * @param string $name Değer ismi
+     * @return $this
+     */
+    public function delete($name)
+    {
+
+    }
+
+    /**
+     * Önbelleğe alınan tüm verileri siler
+     *
+     * @return mixed
+     */
+    public function flush()
+    {
+
+    }
+
+    /**
+     * Öyle bir değerin olup olmadığına bakar
+     *
+     * @param string $name
+     * @return mixed
+     */
+    public function exists($name)
+    {
+
+    }
 }

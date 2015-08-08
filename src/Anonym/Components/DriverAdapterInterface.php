@@ -17,4 +17,43 @@ namespace Anonym\Components\Cache;
 interface DriverAdapterInterface
 {
 
+    /**
+     * Verinin değerini döndürür
+     *
+     * @param string $name
+     * @return mixed
+     */
+    public function get($name);
+
+    /**
+     * Veri ataması yapar
+     *
+     * @param string $name
+     * @param mixed $value
+     * @param int $time
+     * @return mixed
+     */
+    public function set($name, $value, $time = 3600);
+
+    /**
+     * @param string $name Değer ismi
+     * @return $this
+     */
+    public function delete($name);
+
+    /**
+     * Önbelleğe alınan tüm verileri siler
+     *
+     * @return mixed
+     */
+    public function flush();
+
+    /**
+     * Öyle bir değerin olup olmadığına bakar
+     *
+     * @param string $name
+     * @return mixed
+     */
+    public function exists($name);
+
 }
