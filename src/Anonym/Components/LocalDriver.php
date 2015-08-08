@@ -53,10 +53,6 @@ class LocalDriver extends AbstractDriver implements DriverInterface, DriverAdapt
 
         $config = $this->getConfig();
 
-        if (isset($config['time'])) {
-            $this->setTime($config['time']);
-        }
-
         if (isset($config['ext'])) {
             $this->setExt($config['ext']);
         }
@@ -65,6 +61,8 @@ class LocalDriver extends AbstractDriver implements DriverInterface, DriverAdapt
 
             $folder = $config['folder'];
             $this->setFolder($folder);
+
+
             if(!$this->getFileSystem()->exists($folder))
             {
                 $this->getFileSystem()->createDir($folder);
@@ -260,8 +258,13 @@ class LocalDriver extends AbstractDriver implements DriverInterface, DriverAdapt
 
         $time = time() + $time;
         $content = $this->contentGenerator($value, $time);
-        $write = $this->getFileSystem()->write($file, $content);
 
+        if($this->getFileSystem()->exists($file))
+        {
+           $this->getFileSystem()->delete($file);
+        }
+
+        $write = $this->getFileSystem()->put($file, $content);
         if ($write) {
 
             return true;

@@ -28,9 +28,9 @@ class DriverAdapter implements DriverAdapterInterface
     /**
      * Sürücüyü kullanır
      *
-     * @param DriverInterface|null $adapter
+     * @param DriverAdapterInterface|null $adapter
      */
-    public function __construct(DriverInterface $adapter = null)
+    public function __construct(DriverAdapterInterface $adapter = null)
     {
         $this->adapter = $adapter;
     }

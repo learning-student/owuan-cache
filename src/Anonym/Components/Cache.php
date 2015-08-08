@@ -25,7 +25,10 @@ class Cache
     public function __construct(DriverInterface $driver = null, array $config = [])
     {
         $this->useDefaultVars();
-        $this->driver($driver ,$config);
+
+        if (null !== $driver) {
+            $this->driver($driver, $config);
+        }
     }
 
 
@@ -58,6 +61,13 @@ class Cache
     public function driver($driver = '', array $configs = [])
     {
         $driverList = $this->getDriverList();
+
+        if (!count($configs) & $driver === 'local') {
+
+            $configs = [
+                'folder' => ''
+            ];
+        }
 
         if (isset($driverList[$driver])) {
             $driver = $driverList[$driver];
