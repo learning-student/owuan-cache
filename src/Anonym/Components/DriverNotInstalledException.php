@@ -11,7 +11,21 @@
 namespace Anonym\Components\Cache;
 use Exception;
 
-class DriverNotInstalledException extends \Exception
+/**
+ * Class DriverNotInstalledException
+ * @package Anonym\Components\Cache
+ */
+class DriverNotInstalledException extends Exception
 {
+
+    /**
+     * İstisnayı oluşturur
+     *
+     * @param string $message
+     */
+    public function __construct($message = '')
+    {
+        $this->message = $message;
+    }
 
 }
