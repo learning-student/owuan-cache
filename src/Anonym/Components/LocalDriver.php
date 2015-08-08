@@ -10,6 +10,9 @@
 
 namespace Anonym\Components\Cache;
 
+use Anonym\Components\Filesystem\Filesystem;
+use Anonym\Components\Filesystem\FilesystemAdapter;
+
 /**
  * Class LocalDriver
  * @package Anonym\Components\Caches
@@ -21,7 +24,7 @@ class LocalDriver extends AbstractDriver implements DriverInterface
      *
      *
      *
-     * @var  -> fileSystem
+     * @var  FilesystemAdapter-> fileSystem
      */
     private $fileSystem;
 
@@ -38,10 +41,14 @@ class LocalDriver extends AbstractDriver implements DriverInterface
         if (isset($config['folder'])) {
 
             $folder = $config['folder'];
-
+            if(!$this->getFileSystem()->exists($folder))
+            {
+                $this->getFileSystem()->createDir($folder);
+                chmod($folder, 0777);
+            }
         }
 
-        // we dont need do something
+        // we dont need do something else
         return true;
     }
 
@@ -53,7 +60,27 @@ class LocalDriver extends AbstractDriver implements DriverInterface
      */
     public function boot(array $configs = [])
     {
-
         $this->setConfig($configs);
+        $this->setFileSystem((new Filesystem())->disk('local'));
     }
+
+    /**
+     * @return FilesystemAdapter
+     */
+    public function getFileSystem()
+    {
+        return $this->fileSystem;
+    }
+
+    /**
+     * @param FilesystemAdapter $fileSystem
+     * @return LocalDriver
+     */
+    public function setFileSystem(FilesystemAdapter $fileSystem)
+    {
+        $this->fileSystem = $fileSystem;
+        return $this;
+    }
+
+
 }
