@@ -46,7 +46,8 @@ class Cache extends ConfigRepository implements CacheInterface
             'xcache' => XCacheDriver::class,
             'zend' => ZendDataCache::class,
             'predis' => PredisCacheDriver::class,
-            'apc' => ApcCacheDriver::class
+            'apc' => ApcCacheDriver::class,
+            'array' => ArrayCacheDriver::class
         ]);
     }
     /**
