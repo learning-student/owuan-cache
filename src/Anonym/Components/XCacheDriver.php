@@ -14,7 +14,9 @@ namespace Anonym\Components\Cache;
  * Class XCacheDriver
  * @package Anonym\Components\Cache
  */
-class XCacheDriver implements DriverInterface, DriverAdapterInterface
+class XCacheDriver implements DriverInterface,
+    DriverAdapterInterface,
+    FlushableInterface
 {
 
     /**
