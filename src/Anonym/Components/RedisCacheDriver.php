@@ -10,8 +10,11 @@
 
 namespace Anonym\Components\Cache;
 
-
-class RedisCacheDriver
+/**
+ * Class RedisCacheDriver
+ * @package Anonym\Components\Cache
+ */
+class RedisCacheDriver implements DriverAdapterInterface,DriverInterface
 {
 
 }

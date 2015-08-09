@@ -40,6 +40,8 @@ class Cache extends ConfigRepository implements CacheInterface
     {
         $this->setDriverList([
             'local' => FileCache::class,
+            'memcache' => MemcacheDriver::class,
+            'redis' => RedisCacheDriver::class
         ]);
     }
     /**
