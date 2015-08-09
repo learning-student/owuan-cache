@@ -51,7 +51,7 @@ class MemcacheDriver  implements DriverInterface, DriverAdapterInterface
 
     /**
      * @param string $name Değer ismi
-     * @return $this
+     * @return bool
      */
     public function delete($name)
     {

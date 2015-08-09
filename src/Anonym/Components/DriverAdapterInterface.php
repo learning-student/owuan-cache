@@ -37,7 +37,7 @@ interface DriverAdapterInterface
 
     /**
      * @param string $name Değer ismi
-     * @return $this
+     * @return mixed
      */
     public function delete($name);
 

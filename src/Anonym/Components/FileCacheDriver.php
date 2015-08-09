@@ -274,7 +274,7 @@ class LocalDriver extends ConfigRepository implements DriverInterface, DriverAda
 
     /**
      * @param string $name Değer ismi
-     * @return $this
+     * @return bool
      */
     public function delete($name)
     {
