@@ -44,6 +44,7 @@ class Cache extends ConfigRepository implements CacheInterface
             'redis' => RedisCacheDriver::class,
             'xcache' => XCacheDriver::class,
             'zend' => ZendDataCache::class,
+            'predis' => PredisCacheDriver::class
         ]);
     }
     /**
@@ -66,11 +67,8 @@ class Cache extends ConfigRepository implements CacheInterface
     {
         $driverList = $this->getDriverList();
 
-        if (!count($configs) & $driver === 'local') {
-
-            $configs = [
-                'folder' => ''
-            ];
+        if (!count($configs)) {
+            $configs = isset($this->getConfig()[$driver]) ? $this->getConfig()[$driver] : [];
         }
 
         if (isset($driverList[$driver])) {
@@ -93,10 +91,6 @@ class Cache extends ConfigRepository implements CacheInterface
     public function setDriver(DriverInterface $driver, array $configs = [])
     {
 
-
-        if (!count($configs)) {
-            $configs = $this->getConfig();
-        }
 
        $driver->boot($configs);
 
