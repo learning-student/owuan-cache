@@ -59,12 +59,14 @@ class XCacheDriver implements DriverInterface,
      */
     public function flush()
     {
-        for($i = 0; $i < xcache_count(XC_TYPE_PHP); $i++){
+        $count = xcache_count(XC_TYPE_PHP);
+        for ($i = 0; $i < $count; $i++) {
             // XCache PHP cache temizle.
             xcache_clear_cache(XC_TYPE_PHP, $i);
         }
 
-        for($i = 0; $i < xcache_count(XC_TYPE_VAR); $i++){
+        $count = xcache_count(XC_TYPE_VAR);
+        for ($i = 0; $i < $count; $i++) {
             // XCache degisken cache temizle.
             xcache_clear_cache(XC_TYPE_VAR, $i);
         }

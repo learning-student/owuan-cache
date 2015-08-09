@@ -2,6 +2,16 @@
 
 namespace Anonym\Components\Cache;
 
+
+use Anonym\Components\Cache\PredisCacheDriver;
+use Anonym\Components\Cache\MemcacheDriver;
+use Anonym\Components\Cache\FileCacheDriver;
+use Anonym\Components\Cache\RedisCacheDriver;
+use Anonym\Components\Cache\XCacheDriver;
+use Anonym\Components\Cache\ZendDataCache;
+use Anonym\Components\Cache\ArrayCacheDriver;
+use Anonym\Components\Cache\ApcCacheDriver;
+
 /**
  * Class Cache
  * @package Anonym\Components\Cache
