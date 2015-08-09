@@ -92,6 +92,12 @@ class RedisCacheDriver implements DriverAdapterInterface,DriverInterface
     /**
      * Ayarları kullanır ve bazı başlangıç işlemlerini gerçekleştirir
      *
+     *
+     *  Girilmesi gereken ayalarlar:
+     *  -host,
+     *  -port,
+     *  -timeout
+     *
      * @param array $configs
      * @return mixed
      */
@@ -109,6 +115,8 @@ class RedisCacheDriver implements DriverAdapterInterface,DriverInterface
     }
 
     /**
+     * Redis objesini döndürür
+     *
      * @return Redis
      */
     public function getRedis()
@@ -117,6 +125,8 @@ class RedisCacheDriver implements DriverAdapterInterface,DriverInterface
     }
 
     /**
+     * Redis objesini değiştirir
+     *
      * @param Redis $redis
      * @return RedisCacheDriver
      */
