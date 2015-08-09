@@ -10,6 +10,8 @@
 
 namespace Anonym\Components\Cache;
 
+use Exception;
+use Predis\Client as PredisClient;
 /**
  * Class PredisCacheDriver
  * @package Anonym\Components\Cache
@@ -78,7 +80,7 @@ class PredisCacheDriver implements DriverAdapterInterface, DriverInterface
      */
     public function check()
     {
-        // TODO: Implement check() method.
+        return true;
     }
 
     /**
@@ -89,6 +91,16 @@ class PredisCacheDriver implements DriverAdapterInterface, DriverInterface
      */
     public function boot(array $configs = [])
     {
-        // TODO: Implement boot() method.
+        $scheme = isset($configs['scheme']) ? $configs['scheme'] : 'tcp';
+        $host = $configs['host'];
+        $port = $configs['port'];
+
+        try{
+            $redis = new PredisClient();
+        }catch (Exception $e)
+        {
+
+        }
+
     }
 }
