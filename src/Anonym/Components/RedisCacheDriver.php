@@ -139,6 +139,4 @@ class RedisCacheDriver implements DriverAdapterInterface,
         $this->redis = $redis;
         return $this;
     }
-
-
 }

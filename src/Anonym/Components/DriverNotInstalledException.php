@@ -27,5 +27,4 @@ class DriverNotInstalledException extends Exception
     {
         $this->message = $message;
     }
-
 }

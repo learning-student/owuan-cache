@@ -128,6 +128,4 @@ class MemcacheDriver implements DriverInterface,
         $this->driver = $driver;
         return $this;
     }
-
-
 }

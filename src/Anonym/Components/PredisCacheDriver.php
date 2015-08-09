@@ -129,6 +129,4 @@ class PredisCacheDriver implements DriverAdapterInterface,
         $this->predis = $predis;
         return $this;
     }
-
-
 }
