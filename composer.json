@@ -19,7 +19,8 @@
   ],
   "require": {
     "php": ">=5.4.0",
-    "anonym-php/anonym-filesystem":"~1.2@dev"
+    "anonym-php/anonym-filesystem":"~1.2@dev",
+    "predis/predis" : "1.0.3"
   },
   "autoload": {
     "psr-4": {
