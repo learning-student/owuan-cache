@@ -20,6 +20,13 @@ class PredisCacheDriver implements DriverAdapterInterface, DriverInterface
 {
 
     /**
+     * Predis objesini tutar
+     *
+     *
+     * @var  PredisClient-> predis
+     */
+    private $predis;
+    /**
      * Verinin değerini döndürür
      *
      * @param string $name
@@ -87,19 +94,16 @@ class PredisCacheDriver implements DriverAdapterInterface, DriverInterface
      * Ayarları kullanır ve bazı başlangıç işlemlerini gerçekleştirir
      *
      * @param array $configs
+     * @throws PredisClientException
      * @return mixed
      */
     public function boot(array $configs = [])
     {
-        $scheme = isset($configs['scheme']) ? $configs['scheme'] : 'tcp';
-        $host = $configs['host'];
-        $port = $configs['port'];
-
         try{
-            $redis = new PredisClient();
+            $redis = new PredisClient($configs);
         }catch (Exception $e)
         {
-
+            throw new PredisClientException('Predis sınıfınız düzgün olarak başlatılamadı');
         }
 
     }
