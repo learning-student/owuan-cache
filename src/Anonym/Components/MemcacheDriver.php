@@ -76,7 +76,7 @@ class MemcacheDriver extends AbstractDriver implements DriverInterface, DriverAd
      */
     public function exists($name)
     {
-
+        return $this->getDriver()->get($name);
     }
 
     /**
