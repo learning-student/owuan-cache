@@ -41,12 +41,6 @@ interface DriverAdapterInterface
      */
     public function delete($name);
 
-    /**
-     * Önbelleğe alınan tüm verileri siler
-     *
-     * @return mixed
-     */
-    public function flush();
 
     /**
      * Öyle bir değerin olup olmadığına bakar
