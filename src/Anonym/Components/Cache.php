@@ -16,6 +16,7 @@ class Cache extends ConfigRepository implements CacheInterface
      * @var  array-> driverList
      */
     private $driverList;
+
     /**
      * Ayarları kullanır
      *
@@ -44,7 +45,8 @@ class Cache extends ConfigRepository implements CacheInterface
             'redis' => RedisCacheDriver::class,
             'xcache' => XCacheDriver::class,
             'zend' => ZendDataCache::class,
-            'predis' => PredisCacheDriver::class
+            'predis' => PredisCacheDriver::class,
+            'apc' => ApcCacheDriver::class
         ]);
     }
     /**
