@@ -18,4 +18,13 @@ use Exception;
 class PredisClientException extends Exception
 {
 
+    /**
+     * İstisnayı oluştruru
+     *
+     * @param string $message
+     */
+    public function __construct($message = '')
+    {
+        $this->message = $message;
+    }
 }
