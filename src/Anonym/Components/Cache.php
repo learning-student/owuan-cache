@@ -6,7 +6,7 @@ namespace Anonym\Components\Cache;
  * Class Cache
  * @package Anonym\Components\Cache
  */
-class Cache implements CacheInterface
+class Cache extends ConfigRepository implements CacheInterface
 {
 
     /**
@@ -25,7 +25,7 @@ class Cache implements CacheInterface
     public function __construct(DriverInterface $driver = null, array $config = [])
     {
         $this->useDefaultVars();
-
+        $this->setConfig($config);
         if (null !== $driver) {
             $this->driver($driver, $config);
         }
@@ -89,6 +89,10 @@ class Cache implements CacheInterface
     public function setDriver(DriverInterface $driver, array $configs = [])
     {
 
+
+        if (!count($configs)) {
+            $configs = $this->getConfig();
+        }
 
        $driver->boot($configs);
 

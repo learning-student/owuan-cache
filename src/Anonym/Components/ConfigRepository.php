@@ -14,7 +14,7 @@ namespace Anonym\Components\Cache;
  * Class AbstractDriver
  * @package Anonym\Components\Cache
  */
-abstract class AbstractDriver
+abstract class ConfigRepository
 {
 
     /**

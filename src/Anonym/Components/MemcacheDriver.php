@@ -15,7 +15,7 @@ use Memcache;
  * Class MemcacheDriver
  * @package Anonym\Components\Cache
  */
-class MemcacheDriver extends AbstractDriver implements DriverInterface, DriverAdapterInterface
+class MemcacheDriver  implements DriverInterface, DriverAdapterInterface
 {
 
     /**

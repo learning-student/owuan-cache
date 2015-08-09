@@ -17,7 +17,7 @@ use Anonym\Components\Filesystem\FilesystemAdapter;
  * Class LocalDriver
  * @package Anonym\Components\Caches
  */
-class LocalDriver extends AbstractDriver implements DriverInterface, DriverAdapterInterface
+class LocalDriver extends ConfigRepository implements DriverInterface, DriverAdapterInterface
 {
 
     /**
