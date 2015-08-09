@@ -26,6 +26,7 @@ class PredisCacheDriver implements DriverAdapterInterface, DriverInterface
      * @var  PredisClient-> predis
      */
     private $predis;
+
     /**
      * Verinin değerini döndürür
      *
@@ -34,7 +35,7 @@ class PredisCacheDriver implements DriverAdapterInterface, DriverInterface
      */
     public function get($name)
     {
-        // TODO: Implement get() method.
+        return $this->getPredis()->get($name);
     }
 
     /**
@@ -47,7 +48,7 @@ class PredisCacheDriver implements DriverAdapterInterface, DriverInterface
      */
     public function set($name, $value, $time = 3600)
     {
-        // TODO: Implement set() method.
+         return $this->getPredis()->set($name, $value, null, $time);
     }
 
     /**
@@ -56,7 +57,7 @@ class PredisCacheDriver implements DriverAdapterInterface, DriverInterface
      */
     public function delete($name)
     {
-        // TODO: Implement delete() method.
+        return $this->getPredis()->del($name);
     }
 
     /**
@@ -66,7 +67,7 @@ class PredisCacheDriver implements DriverAdapterInterface, DriverInterface
      */
     public function flush()
     {
-        // TODO: Implement flush() method.
+        return $this->getPredis()->flushall();
     }
 
     /**
@@ -77,7 +78,7 @@ class PredisCacheDriver implements DriverAdapterInterface, DriverInterface
      */
     public function exists($name)
     {
-        // TODO: Implement exists() method.
+        return $this->getPredis()->exists($name);
     }
 
     /**
@@ -106,5 +107,26 @@ class PredisCacheDriver implements DriverAdapterInterface, DriverInterface
             throw new PredisClientException('Predis sınıfınız düzgün olarak başlatılamadı');
         }
 
+        $this->setPredis($redis);
     }
+
+    /**
+     * @return PredisClient
+     */
+    public function getPredis()
+    {
+        return $this->predis;
+    }
+
+    /**
+     * @param PredisClient $predis
+     * @return PredisCacheDriver
+     */
+    public function setPredis(PredisClient $predis)
+    {
+        $this->predis = $predis;
+        return $this;
+    }
+
+
 }
