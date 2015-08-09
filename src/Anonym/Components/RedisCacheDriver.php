@@ -9,13 +9,16 @@
 
 
 namespace Anonym\Components\Cache;
+
 use Redis;
 
 /**
  * Class RedisCacheDriver
  * @package Anonym\Components\Cache
  */
-class RedisCacheDriver implements DriverAdapterInterface,DriverInterface
+class RedisCacheDriver implements DriverAdapterInterface,
+    DriverInterface,
+    FlushableInterface
 {
 
     /**
@@ -25,6 +28,7 @@ class RedisCacheDriver implements DriverAdapterInterface,DriverInterface
      * @var Redis -> redis
      */
     private $redis;
+
     /**
      * Verinin değerini döndürür
      *
