@@ -12,11 +12,14 @@ namespace Anonym\Components\Cache;
 
 use Exception;
 use Predis\Client as PredisClient;
+
 /**
  * Class PredisCacheDriver
  * @package Anonym\Components\Cache
  */
-class PredisCacheDriver implements DriverAdapterInterface, DriverInterface
+class PredisCacheDriver implements DriverAdapterInterface,
+    DriverInterface,
+    FlushableInterface
 {
 
     /**
@@ -48,7 +51,7 @@ class PredisCacheDriver implements DriverAdapterInterface, DriverInterface
      */
     public function set($name, $value, $time = 3600)
     {
-         return $this->getPredis()->set($name, $value, null, $time);
+        return $this->getPredis()->set($name, $value, null, $time);
     }
 
     /**
@@ -100,10 +103,9 @@ class PredisCacheDriver implements DriverAdapterInterface, DriverInterface
      */
     public function boot(array $configs = [])
     {
-        try{
+        try {
             $redis = new PredisClient($configs);
-        }catch (Exception $e)
-        {
+        } catch (Exception $e) {
             throw new PredisClientException('Predis sınıfınız düzgün olarak başlatılamadı');
         }
 

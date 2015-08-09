@@ -11,11 +11,14 @@
 namespace Anonym\Components\Cache;
 
 use Memcache;
+
 /**
  * Class MemcacheDriver
  * @package Anonym\Components\Cache
  */
-class MemcacheDriver  implements DriverInterface, DriverAdapterInterface, FlushableInterface
+class MemcacheDriver implements DriverInterface,
+    DriverAdapterInterface,
+    FlushableInterface
 {
 
     /**
@@ -25,6 +28,7 @@ class MemcacheDriver  implements DriverInterface, DriverAdapterInterface, Flusha
      * @var  \Memcache-> driver
      */
     private $driver;
+
     /**
      * Verinin değerini döndürür
      *
@@ -87,8 +91,7 @@ class MemcacheDriver  implements DriverInterface, DriverAdapterInterface, Flusha
     public function check()
     {
 
-        if(extension_loaded('memcache'))
-        {
+        if (extension_loaded('memcache')) {
             return true;
         }
 
@@ -105,7 +108,7 @@ class MemcacheDriver  implements DriverInterface, DriverAdapterInterface, Flusha
         $host = $configs['host'];
         $port = $configs['port'];
 
-        $this->setDriver( new Memcache($host, $port));
+        $this->setDriver(new Memcache($host, $port));
     }
 
     /**
