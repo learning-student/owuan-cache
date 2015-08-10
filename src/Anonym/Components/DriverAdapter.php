@@ -69,12 +69,17 @@ class DriverAdapter implements DriverAdapterInterface
 
     /**
      * Önbelleğe alınan tüm verileri siler
-     *
+     * @throws DriverNotFlushableException
      * @return mixed
      */
     public function flush()
     {
-        return $this->adapter->flush();
+
+        if ($this->adapter instanceof FlushableInterface) {
+            return $this->adapter->flush();
+        } else {
+            throw new DriverNotFlushableException('%s sürücünüz flushable değildir', get_class($this->adapter));
+        }
     }
 
     /**
