@@ -24,7 +24,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Anonym\\Components\\Cache\\": "src/Anonym/Components/"
+      "Anonym\\Components\\Cache\\": ""
     }
   },
   "extra": {
