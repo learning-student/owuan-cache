@@ -50,7 +50,8 @@ class MemcacheDriver implements DriverInterface,
      */
     public function set($name, $value, $time = 3600)
     {
-        return $this->getDriver()->set($name, $value, $time);
+
+        return $this->getDriver()->add($name, $value, false, $time);
     }
 
     /**
@@ -107,8 +108,9 @@ class MemcacheDriver implements DriverInterface,
     {
         $host = isset($configs['host']) ? $configs['host'] : '127.0.0.1';
         $port = isset($configs['port']) ? $configs['port'] : 11211;
-
-        $this->setDriver(new Memcache($host, $port));
+        $memcache = new Memcache();
+        $memcache->addserver($host, $port);
+        $this->setDriver($memcache);
     }
 
     /**
@@ -120,10 +122,10 @@ class MemcacheDriver implements DriverInterface,
     }
 
     /**
-     * @param \Memcache $driver
+     * @param Memcache $driver
      * @return MemcacheDriver
      */
-    public function setDriver($driver)
+    public function setDriver(Memcache $driver)
     {
         $this->driver = $driver;
         return $this;
