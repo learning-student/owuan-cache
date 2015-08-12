@@ -9,3 +9,7 @@
 
 include 'vendor/autoload.php';
 
+$cache = new \Anonym\Components\Cache\Cache();
+$driver = $cache->driver('memcache', [
+    'host' =>
+]);

@@ -105,8 +105,8 @@ class MemcacheDriver implements DriverInterface,
      */
     public function boot(array $configs = [])
     {
-        $host = $configs['host'];
-        $port = $configs['port'];
+        $host = isset($configs['host']) ? $configs['host'] : '127.0.0.1';
+        $port = isset($configs['port']) ? $configs['port'] : 11211;
 
         $this->setDriver(new Memcache($host, $port));
     }
