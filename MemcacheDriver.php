@@ -13,6 +13,8 @@ namespace Anonym\Components\Cache;
 use Memcache;
 
 /**
+ * the driver of memcache
+ *
  * Class MemcacheDriver
  * @package Anonym\Components\Cache
  */
@@ -39,6 +41,7 @@ class MemcacheDriver implements DriverInterface,
     {
         return $this->getDriver()->get($name);
     }
+
 
     /**
      * Veri ataması yapar
@@ -114,7 +117,9 @@ class MemcacheDriver implements DriverInterface,
     }
 
     /**
-     * @return \Memcache
+     * get the memcache driver
+     *
+     * @return Memcache
      */
     public function getDriver()
     {
