@@ -23,9 +23,9 @@ class CacheServiceProvider extends ServiceProvider
 
         $this->singleton('cache', function(){
             $configs = Config::get('stroge.cache');
-            $driver = isset($configs['driver']) ? $configs['driver'] : '';
+            $driver = isset($configs['driver']) ? $configs['driver'] : 'file';
 
-            return (new \Anonym\Components\Cache\Cache())->driver($driver, $configs);
+            return (new Cache())->driver($driver, $configs);
         });
 
     }
