@@ -19,15 +19,18 @@ use Anonym\Facades\Config;
 class CacheServiceProvider extends ServiceProvider
 {
 
-    public function register(){
-
-        $this->singleton('cache', function(){
+    /**
+     *
+     * register the cache provider
+     *
+     */
+    public function register()
+    {
+        $this->singleton('cache', function () {
             $configs = Config::get('stroge.cache');
             $driver = isset($configs['driver']) ? $configs['driver'] : 'file';
 
             return (new Cache())->driver($driver, $configs);
         });
-
     }
-
 }
