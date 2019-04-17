@@ -16,6 +16,8 @@ use Anonym\Components\Filesystem\FilesystemAdapter;
 /**
  * Class LocalDriver
  * @package Anonym\Components\Caches
+ *
+ * anonym-php/anonym-filesystem need to be installed in order to use this cache driver
  */
 class FileCacheDriver extends ConfigRepository implements DriverInterface,
     DriverAdapterInterface,

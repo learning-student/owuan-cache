@@ -16,6 +16,7 @@ use Predis\Client as PredisClient;
 /**
  * Class PredisCacheDriver
  * @package Anonym\Components\Cache
+ * predis/predis package need to be installed in order to use this package
  */
 class PredisCacheDriver implements DriverAdapterInterface,
     DriverInterface,

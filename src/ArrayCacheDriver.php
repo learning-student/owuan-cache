@@ -35,7 +35,18 @@ class ArrayCacheDriver implements DriverAdapterInterface,
      */
     public function get($name)
     {
-        return static::$data[$name];
+
+        $data = static::$data[$name];
+        $current = (new \DateTime())->getTimestamp();
+
+        if ($data && $data['end_time'] > $current) {
+            return $data['value'];
+        }
+
+        // because end_time has ended and we don't need to use it anymore
+        $this->delete($name);
+
+        return false;
     }
 
     /**
@@ -46,9 +57,18 @@ class ArrayCacheDriver implements DriverAdapterInterface,
      * @param int $time
      * @return mixed
      */
-    public function set($name, $value, $time = 3600)
+    public function set($name, $value, $time = 3600): ArrayCacheDriver
     {
-        static::$data[$name] = $value;
+
+        // current timestamp
+        $end = (new \DateTime("+$time seconds"))->getTimestamp();
+
+
+        static::$data[$name] = [
+            'value' => $value,
+            'end_time' => $end
+        ];
+
         return $this;
     }
 
