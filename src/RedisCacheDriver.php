@@ -35,7 +35,7 @@ class RedisCacheDriver implements DriverAdapterInterface,
      * @param string $name
      * @return mixed
      */
-    public function get($name)
+    public function get(string $name)
     {
         return $this->getRedis()->get($name);
     }
@@ -48,7 +48,7 @@ class RedisCacheDriver implements DriverAdapterInterface,
      * @param int $time
      * @return mixed
      */
-    public function set($name, $value, $time = 3600)
+    public function set(string $name, $value, int $time = 3600)
     {
         return $this->getRedis()->set($name, $value, $time);
     }
@@ -57,9 +57,9 @@ class RedisCacheDriver implements DriverAdapterInterface,
      * @param string $name Değer ismi
      * @return bool
      */
-    public function delete($name)
+    public function delete(string $name): bool
     {
-        return $this->getRedis()->delete($name);
+        return (bool)$this->getRedis()->delete($name);
     }
 
     /**
@@ -78,7 +78,7 @@ class RedisCacheDriver implements DriverAdapterInterface,
      * @param string $name
      * @return bool
      */
-    public function exists($name)
+    public function exists(string $name): bool
     {
         return $this->getRedis()->exists($name);
     }

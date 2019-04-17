@@ -23,7 +23,7 @@ interface DriverAdapterInterface
      * @param string $name
      * @return mixed
      */
-    public function get($name);
+    public function get(string $name);
 
     /**
      * Veri ataması yapar
@@ -33,13 +33,13 @@ interface DriverAdapterInterface
      * @param int $time
      * @return mixed
      */
-    public function set($name, $value, $time = 3600);
+    public function set(string $name, $value, int $time = 3600);
 
     /**
      * @param string $name Değer ismi
      * @return mixed
      */
-    public function delete($name);
+    public function delete(string $name): bool;
 
 
     /**
@@ -48,6 +48,6 @@ interface DriverAdapterInterface
      * @param string $name
      * @return mixed
      */
-    public function exists($name);
+    public function exists(string $name): bool;
 
 }

@@ -37,7 +37,7 @@ class PredisCacheDriver implements DriverAdapterInterface,
      * @param string $name
      * @return mixed
      */
-    public function get($name)
+    public function get(string $name)
     {
         return $this->getPredis()->get($name);
     }
@@ -50,7 +50,7 @@ class PredisCacheDriver implements DriverAdapterInterface,
      * @param int $time
      * @return mixed
      */
-    public function set($name, $value, $time = 3600)
+    public function set(string $name, $value, int $time = 3600)
     {
         return $this->getPredis()->set($name, $value, null, $time);
     }
@@ -59,9 +59,9 @@ class PredisCacheDriver implements DriverAdapterInterface,
      * @param string $name Değer ismi
      * @return mixed
      */
-    public function delete($name)
+    public function delete(string $name): bool
     {
-        return $this->getPredis()->del($name);
+        return (bool)$this->getPredis()->del($name);
     }
 
     /**
@@ -80,7 +80,7 @@ class PredisCacheDriver implements DriverAdapterInterface,
      * @param string $name
      * @return mixed
      */
-    public function exists($name)
+    public function exists(string $name): bool
     {
         return $this->getPredis()->exists($name);
     }
@@ -99,8 +99,8 @@ class PredisCacheDriver implements DriverAdapterInterface,
      * Ayarları kullanır ve bazı başlangıç işlemlerini gerçekleştirir
      *
      * @param array $configs
-     * @throws PredisClientException
      * @return mixed
+     * @throws PredisClientException
      */
     public function boot(array $configs = [])
     {

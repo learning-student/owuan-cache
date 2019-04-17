@@ -37,7 +37,7 @@ class MemcacheDriver implements DriverInterface,
      * @param string $name
      * @return mixed
      */
-    public function get($name)
+    public function get(string $name)
     {
         return $this->getDriver()->get($name);
     }
@@ -51,7 +51,7 @@ class MemcacheDriver implements DriverInterface,
      * @param int $time
      * @return mixed
      */
-    public function set($name, $value, $time = 3600)
+    public function set(string $name, $value, int $time = 3600)
     {
 
         return $this->getDriver()->add($name, $value, false, $time);
@@ -61,7 +61,7 @@ class MemcacheDriver implements DriverInterface,
      * @param string $name Değer ismi
      * @return bool
      */
-    public function delete($name)
+    public function delete(string $name): bool
     {
         return $this->getDriver()->delete($name);
     }
@@ -82,9 +82,9 @@ class MemcacheDriver implements DriverInterface,
      * @param string $name
      * @return mixed
      */
-    public function exists($name)
+    public function exists(string $name): bool
     {
-        return $this->getDriver()->get($name);
+        return (bool)$this->getDriver()->get($name);
     }
 
     /**
@@ -109,8 +109,9 @@ class MemcacheDriver implements DriverInterface,
      */
     public function boot(array $configs = [])
     {
-        $host = isset($configs['host']) ? $configs['host'] : '127.0.0.1';
-        $port = isset($configs['port']) ? $configs['port'] : 11211;
+        $host = $configs['host'] ?? '127.0.0.1';
+        $port = $configs['port'] ?? 11211;
+        
         $memcache = new Memcache();
         $memcache->connect($host, $port);
         $this->setDriver($memcache);

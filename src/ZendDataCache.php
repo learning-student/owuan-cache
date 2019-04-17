@@ -38,7 +38,7 @@ class ZendDataCache implements DriverAdapterInterface,
      * @param int $time
      * @return mixed
      */
-    public function set($name, $value, $time = 3600)
+    public function set(string $name, $value,int $time = 3600)
     {
         return zend_shm_cache_store($name, $value, $time);
     }
@@ -47,7 +47,7 @@ class ZendDataCache implements DriverAdapterInterface,
      * @param string $name Değer ismi
      * @return mixed
      */
-    public function delete($name)
+    public function delete( string $name) : bool
     {
         return zend_shm_cache_delete($name);
     }
@@ -68,7 +68,7 @@ class ZendDataCache implements DriverAdapterInterface,
      * @param string $name
      * @return mixed
      */
-    public function exists($name)
+    public function exists(string $name) : bool
     {
         return (false !== $this->get($name));
     }

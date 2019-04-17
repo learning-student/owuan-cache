@@ -8,7 +8,7 @@ namespace Anonym\Components\Cache;
  * Class Cache
  * @package Anonym\Components\Cache
  */
-class Cache extends ConfigRepository implements CacheInterface
+class Cache extends ConfigRepository implements CacheInterface, DriverAdapterInterface
 {
 
     /**
@@ -22,9 +22,10 @@ class Cache extends ConfigRepository implements CacheInterface
     /**
      *
      * @param array $config
-     * @param DriverInterface $driver
+     * @param DriverInterface|DriverAdapterInterface $driver
+     * @throws DriverNotInstalledException
      */
-    public function __construct(array $config = [], DriverInterface $driver = null)
+    public function __construct(array $config = [], DriverAdapterInterface $driver = null)
     {
         $this->useDefaultVars();
         $this->setConfig($config);
@@ -55,9 +56,9 @@ class Cache extends ConfigRepository implements CacheInterface
     }
 
     /**
-     * @return DriverInterface
+     * @return DriverAdapterInterface
      */
-    public function getDriver()
+    public function getDriver(): DriverAdapterInterface
     {
         return $this->driver;
     }
@@ -70,7 +71,7 @@ class Cache extends ConfigRepository implements CacheInterface
      * @return DriverAdapterInterface
      * @throws DriverNotInstalledException
      */
-    public function driver($driver = '', array $configs = [])
+    public function driver($driver = '', array $configs = []): DriverAdapterInterface
     {
         $driverList = $this->getDriverList();
 
@@ -95,14 +96,14 @@ class Cache extends ConfigRepository implements CacheInterface
      * @return DriverAdapterInterface
      * @throws DriverNotInstalledException
      */
-    public function setDriver(DriverInterface $driver, array $configs = [])
+    public function setDriver(DriverInterface $driver, array $configs = []): DriverAdapterInterface
     {
 
 
         $driver->boot($configs);
 
         if (true !== $driver->check()) {
-            throw new DriverNotInstalledException(sprintf('%s sürücünüz kullanıma hazır değil.', get_class($driver)));
+            throw new DriverNotInstalledException(sprintf('%s driver is not installed yet ', get_class($driver)));
         }
 
 
@@ -121,17 +122,6 @@ class Cache extends ConfigRepository implements CacheInterface
         return new DriverAdapter($driver);
     }
 
-    /**
-     * Dinamik olarak sürücüden method çağrılır
-     *
-     * @param string $name
-     * @param array $args
-     * @return mixed
-     */
-    public function __call($name, $args)
-    {
-        return call_user_func_array([$this->getDriver(), $name], $args);
-    }
 
     /**
      * @return array
@@ -151,4 +141,47 @@ class Cache extends ConfigRepository implements CacheInterface
         return $this;
     }
 
+    /**
+     * Verinin değerini döndürür
+     *
+     * @param string $name
+     * @return mixed
+     */
+    public function get(string $name)
+    {
+        return $this->getDriver()->get($name);
+    }
+
+    /**
+     * Veri ataması yapar
+     *
+     * @param string $name
+     * @param mixed $value
+     * @param int $time
+     * @return mixed
+     */
+    public function set(string $name, $value, int $time = 3600)
+    {
+        $this->getDriver()->set($name, $value, $time);
+    }
+
+    /**
+     * @param string $name Değer ismi
+     * @return mixed
+     */
+    public function delete(string $name): bool
+    {
+        return $this->getDriver()->delete($name);
+    }
+
+    /**
+     * Öyle bir değerin olup olmadığına bakar
+     *
+     * @param string $name
+     * @return mixed
+     */
+    public function exists($name): bool
+    {
+        return $this->getDriver()->delete($name);
+    }
 }

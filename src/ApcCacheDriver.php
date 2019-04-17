@@ -23,7 +23,7 @@ class ApcCacheDriver implements DriverInterface, DriverAdapterInterface
      * @param string $name
      * @return mixed
      */
-    public function get($name)
+    public function get(string $name)
     {
         return apc_fetch($name);
     }
@@ -36,7 +36,7 @@ class ApcCacheDriver implements DriverInterface, DriverAdapterInterface
      * @param int $time
      * @return mixed
      */
-    public function set($name, $value, $time = 3600)
+    public function set(string $name, $value, int $time = 3600)
     {
         return apc_add($name, $value, $time);
     }
@@ -45,9 +45,11 @@ class ApcCacheDriver implements DriverInterface, DriverAdapterInterface
      * @param string $name Değer ismi
      * @return mixed
      */
-    public function delete($name)
+    public function delete(string $name): bool
     {
-        return apc_delete($name);
+        $response = apc_delete($name);
+
+        return is_bool($response) ? $response : true;
     }
 
     /**
@@ -66,9 +68,11 @@ class ApcCacheDriver implements DriverInterface, DriverAdapterInterface
      * @param string $name
      * @return mixed
      */
-    public function exists($name)
+    public function exists($name) : bool
     {
-        return apc_exists($name);
+        $response =  apc_exists($name);
+
+        return is_bool($response) ? $response : true;
     }
 
     /**

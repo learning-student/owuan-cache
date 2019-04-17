@@ -25,7 +25,7 @@ class XCacheDriver implements DriverInterface,
      * @param string $name
      * @return mixed
      */
-    public function get($name)
+    public function get(string $name)
     {
         return xcache_get($name);
     }
@@ -38,16 +38,16 @@ class XCacheDriver implements DriverInterface,
      * @param int $time
      * @return mixed
      */
-    public function set($name, $value, $time = 3600)
+    public function set(string $name, $value, int $time = 3600)
     {
-         return xcache_set($name, $value, $time);
+        return xcache_set($name, $value, $time);
     }
 
     /**
      * @param string $name Değer ismi
      * @return mixed
      */
-    public function delete($name)
+    public function delete(string $name): bool
     {
         return xcache_unset($name);
     }
@@ -80,7 +80,7 @@ class XCacheDriver implements DriverInterface,
      * @param string $name
      * @return mixed
      */
-    public function exists($name)
+    public function exists(string $name): bool
     {
         return xcache_isset($name);
     }
@@ -92,7 +92,7 @@ class XCacheDriver implements DriverInterface,
      */
     public function check()
     {
-         return function_exists('xcache_set');
+        return function_exists('xcache_set');
     }
 
     /**

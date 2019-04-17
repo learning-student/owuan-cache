@@ -67,12 +67,11 @@ class FileCacheDriver extends ConfigRepository implements DriverInterface,
             $this->setFolder($folder);
 
 
-            if(!$this->getFileSystem()->exists($folder))
-            {
+            if (!$this->getFileSystem()->exists($folder)) {
                 $this->getFileSystem()->createDir($folder);
                 chmod($folder, 0777);
             }
-        }else{
+        } else {
 
             return false;
         }
@@ -151,7 +150,6 @@ class FileCacheDriver extends ConfigRepository implements DriverInterface,
     }
 
 
-
     /**
      * Sınıfta kullanılmak üzere cache dosyalarının yolunu hazırlar
      *
@@ -161,7 +159,7 @@ class FileCacheDriver extends ConfigRepository implements DriverInterface,
     private function inPath($path)
     {
 
-        $path =  $this->getFolder() . '/' . $path;
+        $path = $this->getFolder() . '/' . $path;
         return $path;
     }
 
@@ -177,11 +175,12 @@ class FileCacheDriver extends ConfigRepository implements DriverInterface,
 
         if ($now > $time) {
             return false;
-        }else{
+        } else {
             return true;
         }
 
     }
+
     /**
      * Girilen parametreye göre dosyanın yolunu hazırlar
      *
@@ -203,8 +202,9 @@ class FileCacheDriver extends ConfigRepository implements DriverInterface,
      */
     private function contentGenerator($value, $time = 0)
     {
-        return $time. "#". gzcompress($value);
+        return $time . "#" . gzcompress($value);
     }
+
     /**
      * İçeriği parçalar
      *
@@ -220,13 +220,14 @@ class FileCacheDriver extends ConfigRepository implements DriverInterface,
         ];
 
     }
+
     /**
      * Verinin değerini döndürür
      *
      * @param string $name
      * @return mixed
      */
-    public function get($name)
+    public function get(string $name)
     {
         $file = $this->cacheFileNameGenaretor($name);
         $file = $this->inPath($file);
@@ -239,7 +240,7 @@ class FileCacheDriver extends ConfigRepository implements DriverInterface,
 
             if ($this->checkTime($time)) {
                 return $content;
-            }else{
+            } else {
                 $this->delete($file);
             }
         }
@@ -255,7 +256,7 @@ class FileCacheDriver extends ConfigRepository implements DriverInterface,
      * @param int $time
      * @return mixed
      */
-    public function set($name, $value, $time = 3600)
+    public function set(string $name, $value, int $time = 3600)
     {
         $file = $this->cacheFileNameGenaretor($name);
         $file = $this->inPath($file);
@@ -263,9 +264,8 @@ class FileCacheDriver extends ConfigRepository implements DriverInterface,
         $time = time() + $time;
         $content = $this->contentGenerator($value, $time);
 
-        if($this->getFileSystem()->exists($file))
-        {
-           $this->getFileSystem()->delete($file);
+        if ($this->getFileSystem()->exists($file)) {
+            $this->getFileSystem()->delete($file);
         }
 
         $write = $this->getFileSystem()->put($file, $content);
@@ -280,19 +280,15 @@ class FileCacheDriver extends ConfigRepository implements DriverInterface,
      * @param string $name Değer ismi
      * @return bool
      */
-    public function delete($name)
+    public function delete(string $name): bool
     {
         $file = $this->cacheFileNameGenaretor($name);
         $file = $this->inPath($file);
 
         $filesys = $this->getFileSystem();
 
-        if ($filesys->exists($file)) {
-            return $filesys->delete($file);
-        }else{
-            return false;
-        }
 
+        return (bool)($filesys->exists($file) ? $filesys->delete($file) : true);
     }
 
     /**
@@ -304,8 +300,7 @@ class FileCacheDriver extends ConfigRepository implements DriverInterface,
     {
 
         $files = $this->getFileSystem()->files($this->getFolder());
-        foreach($files as $file)
-        {
+        foreach ($files as $file) {
             $this->delete($file);
         }
 
@@ -318,15 +313,12 @@ class FileCacheDriver extends ConfigRepository implements DriverInterface,
      * @param string $name
      * @return mixed
      */
-    public function exists($name)
+    public function exists(string $name): bool
     {
         $file = $this->cacheFileNameGenaretor($name);
         $file = $this->inPath($file);
 
-        if($this->exists($file)){
-            return true;
-        }else{
-            return false;
-        }
+
+        return (bool)$this->exists($file);
     }
 }

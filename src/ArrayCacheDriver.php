@@ -33,7 +33,7 @@ class ArrayCacheDriver implements DriverAdapterInterface,
      * @param string $name
      * @return mixed
      */
-    public function get($name)
+    public function get(string $name)
     {
 
         $data = static::$data[$name];
@@ -57,7 +57,7 @@ class ArrayCacheDriver implements DriverAdapterInterface,
      * @param int $time
      * @return mixed
      */
-    public function set($name, $value, $time = 3600): ArrayCacheDriver
+    public function set(string $name, $value, int $time = 3600): ArrayCacheDriver
     {
 
         // current timestamp
@@ -76,10 +76,10 @@ class ArrayCacheDriver implements DriverAdapterInterface,
      * @param string $name Değer ismi
      * @return mixed
      */
-    public function delete($name)
+    public function delete(string $name): bool
     {
         unset(static::$data[$name]);
-        return $this;
+        return true;
     }
 
     /**
@@ -88,7 +88,7 @@ class ArrayCacheDriver implements DriverAdapterInterface,
      * @param string $name
      * @return mixed
      */
-    public function exists($name)
+    public function exists($name): bool
     {
         return isset(static::$data[$name]) || array_key_exists($name, static::$data);
     }
