@@ -25,7 +25,7 @@ class ZendDataCache implements DriverAdapterInterface,
      * @param string $name
      * @return mixed
      */
-    public function get($name)
+    public function get(string $name)
     {
         return zend_shm_cache_fetch($name);
     }

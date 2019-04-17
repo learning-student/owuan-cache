@@ -68,7 +68,7 @@ class ApcCacheDriver implements DriverInterface, DriverAdapterInterface
      * @param string $name
      * @return mixed
      */
-    public function exists($name) : bool
+    public function exists(string $name) : bool
     {
         $response =  apc_exists($name);
 

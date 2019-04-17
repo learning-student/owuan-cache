@@ -34,13 +34,14 @@ class DriverAdapter implements DriverAdapterInterface
     {
         $this->adapter = $adapter;
     }
+
     /**
      * Verinin değerini döndürür
      *
      * @param string $name
      * @return mixed
      */
-    public function get($name)
+    public function get(string $name)
     {
         return $this->adapter->get($name);
     }
@@ -53,7 +54,7 @@ class DriverAdapter implements DriverAdapterInterface
      * @param int $time
      * @return mixed
      */
-    public function set($name, $value, $time = 3600)
+    public function set(string $name, $value, int $time = 3600)
     {
         return $this->adapter->set($name, $value, $time);
     }
@@ -62,15 +63,15 @@ class DriverAdapter implements DriverAdapterInterface
      * @param string $name Değer ismi
      * @return $this
      */
-    public function delete($name)
+    public function delete(string $name): bool
     {
         return $this->adapter->delete($name);
     }
 
     /**
      * Önbelleğe alınan tüm verileri siler
-     * @throws DriverNotFlushableException
      * @return mixed
+     * @throws DriverNotFlushableException
      */
     public function flush()
     {
@@ -88,7 +89,7 @@ class DriverAdapter implements DriverAdapterInterface
      * @param string $name
      * @return mixed
      */
-    public function exists($name)
+    public function exists(string $name): bool
     {
         return $this->adapter->exists($name);
     }

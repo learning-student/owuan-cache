@@ -180,7 +180,7 @@ class Cache extends ConfigRepository implements CacheInterface, DriverAdapterInt
      * @param string $name
      * @return mixed
      */
-    public function exists($name): bool
+    public function exists(string $name): bool
     {
         return $this->getDriver()->delete($name);
     }
