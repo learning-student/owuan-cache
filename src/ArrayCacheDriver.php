@@ -3,6 +3,10 @@
 
 namespace Anonym\Components\Cache;
 
+use Anonym\Components\Cache\Interfaces\DriverInterface;
+use Anonym\Components\Cache\Interfaces\DriverAdapterInterface;
+use Anonym\Components\Cache\Interfaces\FlushableInterface;
+
 /**
  * Class ArrayCacheDriver
  * @package Anonym\Components\Cache
@@ -18,7 +22,7 @@ class ArrayCacheDriver implements DriverAdapterInterface,
      *
      * @var array -> data
      */
-    private static $data;
+    private $data;
 
     /**
      * Verinin değerini döndürür
@@ -35,7 +39,7 @@ class ArrayCacheDriver implements DriverAdapterInterface,
         }
 
 
-        $data = static::$data[$name];
+        $data = $this->data[$name];
         $current = (new \DateTime())->getTimestamp();
 
         if ($data && $data['end_time'] > $current) {
@@ -63,7 +67,7 @@ class ArrayCacheDriver implements DriverAdapterInterface,
         try {
             // current timestamp
             $end = (new \DateTime("+$time seconds"))->getTimestamp();
-            static::$data[$name] = [
+            $this->data[$name] = [
                 'value' => $value,
                 'end_time' => $end
             ];
@@ -82,7 +86,7 @@ class ArrayCacheDriver implements DriverAdapterInterface,
      */
     public function delete(string $name): bool
     {
-        unset(static::$data[$name]);
+        unset($this->data[$name]);
         return true;
     }
 
@@ -94,7 +98,7 @@ class ArrayCacheDriver implements DriverAdapterInterface,
      */
     public function exists($name): bool
     {
-        return isset(static::$data[$name]) || array_key_exists($name, static::$data);
+        return isset($this->data[$name]) || array_key_exists($name, $this->data);
     }
 
     /**
@@ -118,7 +122,7 @@ class ArrayCacheDriver implements DriverAdapterInterface,
     {
 
         // do it array
-        static::$data = [];
+        $this->data = [];
     }
 
     /**
@@ -128,23 +132,26 @@ class ArrayCacheDriver implements DriverAdapterInterface,
      */
     public function flush()
     {
-        static::$data = [];
+        $this->data = [];
+
         return $this;
     }
 
     /**
      * @return array
      */
-    public static function getData()
+    public function getData()
     {
-        return self::$data;
+        return $this->data;
     }
 
     /**
      * @param array $data
      */
-    public static function setData($data)
+    public function setData($data)
     {
-        self::$data = $data;
+        $this->data = $data;
+
+        return $this;
     }
 }

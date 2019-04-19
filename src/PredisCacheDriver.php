@@ -5,6 +5,9 @@ namespace Anonym\Components\Cache;
 
 use Exception;
 use Predis\Client as PredisClient;
+use Anonym\Components\Cache\Interfaces\DriverInterface;
+use Anonym\Components\Cache\Interfaces\DriverAdapterInterface;
+use Anonym\Components\Cache\Interfaces\FlushableInterface;
 
 /**
  * Class PredisCacheDriver

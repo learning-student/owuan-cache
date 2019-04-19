@@ -4,6 +4,9 @@
 namespace Anonym\Components\Cache;
 
 use Memcache;
+use Anonym\Components\Cache\Interfaces\DriverInterface;
+use Anonym\Components\Cache\Interfaces\DriverAdapterInterface;
+use Anonym\Components\Cache\Interfaces\FlushableInterface;
 
 /**
  * the driver of memcache

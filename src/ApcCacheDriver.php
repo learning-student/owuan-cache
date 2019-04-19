@@ -3,6 +3,9 @@
 
 namespace Anonym\Components\Cache;
 
+use Anonym\Components\Cache\Interfaces\DriverInterface;
+use Anonym\Components\Cache\Interfaces\DriverAdapterInterface;
+
 /**
  * Class ApcCacheDriver
  * @package Anonym\Components\Cache

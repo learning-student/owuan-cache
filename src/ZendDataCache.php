@@ -3,6 +3,10 @@
 
 namespace Anonym\Components\Cache;
 
+use Anonym\Components\Cache\Interfaces\DriverInterface;
+use Anonym\Components\Cache\Interfaces\DriverAdapterInterface;
+use Anonym\Components\Cache\Interfaces\FlushableInterface;
+
 /**
  * Class ZendDataCache
  * @package Anonym\Components\Cache

@@ -1,6 +1,6 @@
 <?php
 
-namespace Anonym\Components\Cache;
+namespace Anonym\Components\Cache\Interfaces;
 
 /**
  * Interface DriverInterface

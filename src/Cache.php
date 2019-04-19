@@ -3,12 +3,18 @@
 
 namespace Anonym\Components\Cache;
 
+use Anonym\Components\Cache\Interfaces\CacheInterface;
+use Anonym\Components\Cache\Interfaces\DriverAdapterInterface;
+use Anonym\Components\Cache\Interfaces\FlushableInterface;
 
 /**
  * Class Cache
  * @package Anonym\Components\Cache
  */
-class Cache extends ConfigRepository implements CacheInterface, DriverAdapterInterface
+class Cache extends ConfigRepository implements
+    CacheInterface,
+    DriverAdapterInterface,
+    FlushableInterface
 {
 
     /**
@@ -175,6 +181,7 @@ class Cache extends ConfigRepository implements CacheInterface, DriverAdapterInt
      */
     public function delete(string $name): bool
     {
+
         return $this->getDriver()->delete($name);
     }
 
@@ -187,5 +194,23 @@ class Cache extends ConfigRepository implements CacheInterface, DriverAdapterInt
     public function exists(string $name): bool
     {
         return $this->getDriver()->exists($name);
+    }
+
+    /**
+     * @return mixed
+     * @throws DriverNotFlushableException
+     */
+    public function flush()
+    {
+        if ($this->getDriver() instanceof FlushableInterface) {
+            return $this->getDriver()->flush();
+        }
+
+
+        throw new DriverNotFlushableException(
+            sprintf(
+                '%s driver is not flushable', get_class($this->getDriver())
+            )
+        );
     }
 }

@@ -6,6 +6,9 @@ namespace Anonym\Components\Cache;
 use Anonym\Components\Filesystem\Filesystem;
 use Anonym\Components\Filesystem\FilesystemAdapter;
 
+use Anonym\Components\Cache\Interfaces\DriverInterface;
+use Anonym\Components\Cache\Interfaces\DriverAdapterInterface;
+use Anonym\Components\Cache\Interfaces\FlushableInterface;
 /**
  * Class LocalDriver
  * @package Anonym\Components\Caches
