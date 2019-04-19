@@ -39,7 +39,11 @@ class PredisCacheDriver implements DriverAdapterInterface,
      */
     public function get(string $name)
     {
-        return $this->getPredis()->get($name);
+        $value = $this->getPredis()->get($name);
+
+        return unserialize($value, [
+            'allowed_clases' => true
+        ]);
     }
 
     /**
@@ -50,9 +54,12 @@ class PredisCacheDriver implements DriverAdapterInterface,
      * @param int $time
      * @return bool
      */
-    public function set(string $name, $value, int $time = 3600) : bool
+    public function set(string $name, $value, int $time = 3600): bool
     {
-        return $this->getPredis()->set($name, $value, null, $time);
+        return $this->getPredis()->set($name,
+            serialize($value),
+            null,
+            $time);
     }
 
     /**

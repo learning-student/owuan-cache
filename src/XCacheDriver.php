@@ -27,7 +27,11 @@ class XCacheDriver implements DriverInterface,
      */
     public function get(string $name)
     {
-        return xcache_get($name);
+        $value = xcache_get($name);
+
+        return unserialize($value, [
+            'allowed_clases' => true
+        ]);
     }
 
     /**
@@ -38,9 +42,9 @@ class XCacheDriver implements DriverInterface,
      * @param int $time
      * @return bool
      */
-    public function set(string $name, $value, int $time = 3600) : bool
+    public function set(string $name, $value, int $time = 3600): bool
     {
-        return xcache_set($name, $value, $time);
+        return xcache_set($name, serialize($value), $time);
     }
 
     /**

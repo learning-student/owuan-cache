@@ -25,7 +25,9 @@ class ApcCacheDriver implements DriverInterface, DriverAdapterInterface
      */
     public function get(string $name)
     {
-        return apc_fetch($name);
+        return unserialize(apc_fetch($name), [
+            'allowed_clases' => true
+        ]);
     }
 
     /**
@@ -36,9 +38,9 @@ class ApcCacheDriver implements DriverInterface, DriverAdapterInterface
      * @param int $time
      * @return bool
      */
-    public function set(string $name, $value, int $time = 3600) : bool
+    public function set(string $name, $value, int $time = 3600): bool
     {
-        return apc_add($name, $value, $time);
+        return apc_add($name, serialize($value), $time);
     }
 
     /**
@@ -68,9 +70,9 @@ class ApcCacheDriver implements DriverInterface, DriverAdapterInterface
      * @param string $name
      * @return mixed
      */
-    public function exists(string $name) : bool
+    public function exists(string $name): bool
     {
-        $response =  apc_exists($name);
+        $response = apc_exists($name);
 
         return is_bool($response) ? $response : true;
     }

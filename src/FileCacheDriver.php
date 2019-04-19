@@ -239,7 +239,9 @@ class FileCacheDriver extends ConfigRepository implements DriverInterface,
             list($time, $content) = $parsed;
 
             if ($this->checkTime($time)) {
-                return $content;
+                return unserialize($content, [
+                    'allowed_clases' => true
+                ]);
             } else {
                 $this->delete($file);
             }
@@ -256,8 +258,10 @@ class FileCacheDriver extends ConfigRepository implements DriverInterface,
      * @param int $time
      * @return bool
      */
-    public function set(string $name, $value, int $time = 3600) : bool
+    public function set(string $name, $value, int $time = 3600): bool
     {
+        $value = serialize($value);
+
         $file = $this->cacheFileNameGenaretor($name);
         $file = $this->inPath($file);
 

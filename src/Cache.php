@@ -19,13 +19,19 @@ class Cache extends ConfigRepository implements CacheInterface, DriverAdapterInt
      */
     private $driverList;
 
+
+    /**
+     * @var  DriverAdapterInterface
+     */
+    private $driver;
+
     /**
      *
      * @param array $config
      * @param DriverInterface|DriverAdapterInterface $driver
      * @throws DriverNotInstalledException
      */
-    public function __construct(array $config = [], DriverAdapterInterface $driver = null)
+    public function __construct(array $config = [], string $driver = null)
     {
         $this->useDefaultVars();
         $this->setConfig($config);
@@ -83,9 +89,7 @@ class Cache extends ConfigRepository implements CacheInterface, DriverAdapterInt
             $driver = $driverList[$driver];
         }
 
-        if (is_string($driver)) {
-            $driver = new $driver;
-        }
+        $driver = new $driver;
 
         return $this->setDriver($driver, $configs);
     }
@@ -96,7 +100,7 @@ class Cache extends ConfigRepository implements CacheInterface, DriverAdapterInt
      * @return DriverAdapterInterface
      * @throws DriverNotInstalledException
      */
-    public function setDriver(DriverInterface $driver, array $configs = []): DriverAdapterInterface
+    public function setDriver(DriverAdapterInterface $driver, array $configs = []): DriverAdapterInterface
     {
 
 
@@ -107,26 +111,14 @@ class Cache extends ConfigRepository implements CacheInterface, DriverAdapterInt
         }
 
 
-        return $this->adapter($driver);
-    }
-
-    /**
-     * Driver olarak kullanıma hazırla
-     *
-     * @param DriverInterface $driver
-     * @return DriverAdapterInterface
-     */
-    private function adapter(DriverInterface $driver)
-    {
-
-        return new DriverAdapter($driver);
+        return $this->driver = $driver;
     }
 
 
     /**
      * @return array
      */
-    public function getDriverList()
+    public function getDriverList(): array
     {
         return $this->driverList;
     }
@@ -135,7 +127,7 @@ class Cache extends ConfigRepository implements CacheInterface, DriverAdapterInt
      * @param array $driverList
      * @return Cache
      */
-    public function setDriverList($driverList)
+    public function setDriverList(array $driverList): Cache
     {
         $this->driverList = $driverList;
         return $this;
@@ -149,11 +141,12 @@ class Cache extends ConfigRepository implements CacheInterface, DriverAdapterInt
      */
     public function get(string $name)
     {
-        $response = $this->getDriver()->get($name);
+        try {
+            return $this->getDriver()->get($name);
+        } catch (\Exception $exception) {
+            return false;
+        }
 
-        return $response ? unserialize($response, [
-            'allowed_classes' => true
-        ]) : null;
     }
 
     /**
@@ -162,15 +155,18 @@ class Cache extends ConfigRepository implements CacheInterface, DriverAdapterInt
      * @param string $name
      * @param mixed $value
      * @param int $time
-     * @return DriverAdapterInterface
+     * @return bool
      */
-    public function set(string $name, $value, int $time = 3600) : DriverAdapterInterface
+    public function set(string $name, $value, int $time = 3600): bool
     {
-        $value = serialize($value);
 
-        $this->getDriver()->set($name, $value, $time);
+        try {
+            return $this->getDriver()->set($name, $value, $time);
+        } catch (\Exception $exception) {
+            return false;
+        }
 
-        return $this;
+
     }
 
     /**
@@ -190,6 +186,6 @@ class Cache extends ConfigRepository implements CacheInterface, DriverAdapterInt
      */
     public function exists(string $name): bool
     {
-        return $this->getDriver()->delete($name);
+        return $this->getDriver()->exists($name);
     }
 }

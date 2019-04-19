@@ -36,6 +36,12 @@ class ArrayCacheDriver implements DriverAdapterInterface,
     public function get(string $name)
     {
 
+        // return null if data does not exists
+        if (!$this->exists($name)) {
+            return null;
+        }
+
+
         $data = static::$data[$name];
         $current = (new \DateTime())->getTimestamp();
 

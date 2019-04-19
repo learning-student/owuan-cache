@@ -27,7 +27,11 @@ class ZendDataCache implements DriverAdapterInterface,
      */
     public function get(string $name)
     {
-        return zend_shm_cache_fetch($name);
+        $value = zend_shm_cache_fetch($name);
+
+        return unserialize($value, [
+            'allowed_clases' => true
+        ]);
     }
 
     /**
@@ -40,7 +44,7 @@ class ZendDataCache implements DriverAdapterInterface,
      */
     public function set(string $name, $value, int $time = 3600): bool
     {
-        return (bool)zend_shm_cache_store($name, $value, $time);
+        return (bool)zend_shm_cache_store($name, serialize($value), $time);
     }
 
     /**

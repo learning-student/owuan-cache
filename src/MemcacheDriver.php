@@ -39,7 +39,11 @@ class MemcacheDriver implements DriverInterface,
      */
     public function get(string $name)
     {
-        return $this->getDriver()->get($name);
+        $value =  $this->getDriver()->get($name);
+
+        return unserialize($value, [
+            'allowed_clases' => true
+        ]);
     }
 
 
