@@ -48,9 +48,9 @@ class PredisCacheDriver implements DriverAdapterInterface,
      * @param string $name
      * @param mixed $value
      * @param int $time
-     * @return mixed
+     * @return bool
      */
-    public function set(string $name, $value, int $time = 3600)
+    public function set(string $name, $value, int $time = 3600) : bool
     {
         return $this->getPredis()->set($name, $value, null, $time);
     }

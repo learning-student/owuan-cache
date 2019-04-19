@@ -54,7 +54,7 @@ class DriverAdapter implements DriverAdapterInterface
      * @param int $time
      * @return mixed
      */
-    public function set(string $name, $value, int $time = 3600)
+    public function set(string $name, $value, int $time = 3600) : bool
     {
         return $this->adapter->set($name, $value, $time);
     }

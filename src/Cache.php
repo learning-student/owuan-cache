@@ -149,7 +149,11 @@ class Cache extends ConfigRepository implements CacheInterface, DriverAdapterInt
      */
     public function get(string $name)
     {
-        return $this->getDriver()->get($name);
+        $response = $this->getDriver()->get($name);
+
+        return $response ? unserialize($response, [
+            'allowed_classes' => true
+        ]) : null;
     }
 
     /**
@@ -158,11 +162,15 @@ class Cache extends ConfigRepository implements CacheInterface, DriverAdapterInt
      * @param string $name
      * @param mixed $value
      * @param int $time
-     * @return mixed
+     * @return DriverAdapterInterface
      */
-    public function set(string $name, $value, int $time = 3600)
+    public function set(string $name, $value, int $time = 3600) : DriverAdapterInterface
     {
+        $value = serialize($value);
+
         $this->getDriver()->set($name, $value, $time);
+
+        return $this;
     }
 
     /**

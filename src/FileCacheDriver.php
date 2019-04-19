@@ -254,9 +254,9 @@ class FileCacheDriver extends ConfigRepository implements DriverInterface,
      * @param string $name
      * @param mixed $value
      * @param int $time
-     * @return mixed
+     * @return bool
      */
-    public function set(string $name, $value, int $time = 3600)
+    public function set(string $name, $value, int $time = 3600) : bool
     {
         $file = $this->cacheFileNameGenaretor($name);
         $file = $this->inPath($file);
@@ -273,6 +273,7 @@ class FileCacheDriver extends ConfigRepository implements DriverInterface,
 
             return true;
         }
+
         return false;
     }
 

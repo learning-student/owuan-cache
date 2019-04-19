@@ -26,14 +26,14 @@ interface DriverAdapterInterface
     public function get(string $name);
 
     /**
-     * Veri ataması yapar
+     * stores a value in cache, returns true in success and false in failure
      *
      * @param string $name
      * @param mixed $value
      * @param int $time
-     * @return mixed
+     * @return bool
      */
-    public function set(string $name, $value, int $time = 3600);
+    public function set(string $name, $value, int $time = 3600) : bool;
 
     /**
      * @param string $name Değer ismi

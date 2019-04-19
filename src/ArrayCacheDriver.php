@@ -55,21 +55,26 @@ class ArrayCacheDriver implements DriverAdapterInterface,
      * @param string $name
      * @param mixed $value
      * @param int $time
-     * @return mixed
+     * @return bool
+     * @throws \Exception
      */
-    public function set(string $name, $value, int $time = 3600): ArrayCacheDriver
+    public function set(string $name, $value, int $time = 3600): bool
     {
 
-        // current timestamp
-        $end = (new \DateTime("+$time seconds"))->getTimestamp();
+        try {
+            // current timestamp
+            $end = (new \DateTime("+$time seconds"))->getTimestamp();
+            static::$data[$name] = [
+                'value' => $value,
+                'end_time' => $end
+            ];
+
+        } catch (\Exception $exception) {
+            return false;
+        }
 
 
-        static::$data[$name] = [
-            'value' => $value,
-            'end_time' => $end
-        ];
-
-        return $this;
+        return true;
     }
 
     /**

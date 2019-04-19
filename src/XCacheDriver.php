@@ -36,9 +36,9 @@ class XCacheDriver implements DriverInterface,
      * @param string $name
      * @param mixed $value
      * @param int $time
-     * @return mixed
+     * @return bool
      */
-    public function set(string $name, $value, int $time = 3600)
+    public function set(string $name, $value, int $time = 3600) : bool
     {
         return xcache_set($name, $value, $time);
     }
