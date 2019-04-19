@@ -18,13 +18,4 @@ use Exception;
 class DriverNotFlushableException extends Exception
 {
 
-    /**
-     * İstisnayı oluşturur
-     *
-     * @param string $message
-     */
-    public function __construct($message = '')
-    {
-        $this->message = $message;
-    }
 }
