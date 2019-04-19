@@ -165,7 +165,8 @@ class Cache extends ConfigRepository implements CacheInterface, DriverAdapterInt
         } catch (\Exception $exception) {
             return false;
         }
-        
+
+
     }
 
     /**

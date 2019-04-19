@@ -1,6 +1,12 @@
 composer.phar
+<<<<<<< HEAD
 vendor/
 
 # Commit your application's lock file http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file
+=======
+/vendor/
+
+# Commit your application's lock file https://getcomposer.org/doc/01-basic-usage.md#commit-your-composer-lock-file-to-version-control
+>>>>>>> 5d104e05a5d698fe4101c625367ad09a3da1ca61
 # You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
 # composer.lock
