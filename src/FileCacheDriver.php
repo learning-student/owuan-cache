@@ -19,7 +19,6 @@ class FileCacheDriver extends ConfigRepository implements DriverInterface,
     DriverAdapterInterface,
     FlushableInterface
 {
-
     /**
      *Dosyanın yolunu tutar
      *
