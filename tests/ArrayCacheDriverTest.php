@@ -65,6 +65,4 @@ class ArrayCacheDriverTest extends TestCase
 
     }
 
-
-
 }
